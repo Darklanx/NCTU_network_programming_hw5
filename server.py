@@ -11,7 +11,7 @@ IP = "127.0.0.1"
 PORT = 28888
 
 db = SqliteDatabase('userData.db')
-mqServerIP = "127.0.0.1"
+mqServerIP = "3.85.142.164"#socket.gethostname()
 mqServerPORT = 61613
 
 # connect to mq
@@ -647,11 +647,12 @@ def main():
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.bind((IP, PORT))
+            sock.bind((socket.gethostname(), PORT))
             sock.listen(10)
             while (1):
                 (conn, addr) = sock.accept()
                 with conn:
+                    print("Connected")
                     s = ""
                     while (True):
                         conn.settimeout(0.1)
